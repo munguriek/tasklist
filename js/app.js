@@ -19,6 +19,18 @@ function loadEventListeners(){
     filter.addEventListener('keyup', filterTasks);
 }
 
+//Store task in Local Storage
+function storeInLocalStorage(task){
+    let tasks;
+    if(localStorage.getItem('tasks') === null){
+        tasks = [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 function addTask(e){
     if(taskInput.value === ''){
         alert('Add a task');
@@ -38,6 +50,9 @@ function addTask(e){
     li.appendChild(link);
     //Append child to ul
     taskList.appendChild(li);
+
+    //Store task in local storage
+    storeInLocalStorage(taskInput.value);
     //clear input
     taskInput.value == '';
     e.preventDefault();
